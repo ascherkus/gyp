@@ -73,7 +73,7 @@ rule stamp
 
 rule copy
   description = COPY $out
-  command = ln -f $in $out || cp -af $in $out
+  command = ln -f $in $out 2>/dev/null || cp -af $in $out
 
 """ % {
   'cwd': os.getcwd(),
