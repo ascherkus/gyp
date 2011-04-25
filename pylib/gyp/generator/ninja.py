@@ -6,6 +6,7 @@
 
 import gyp
 import gyp.common
+import gyp.system_test
 import os.path
 import subprocess
 import sys
@@ -479,6 +480,13 @@ class NinjaWriter:
 
   def WriteLn(self, *args):
     self.file.write(' '.join(args) + '\n')
+
+
+def CalculateVariables(default_variables, params):
+  """Calculate additional variables for use in the build (called by gyp)."""
+  cc_target = os.environ.get('CC.target', os.environ.get('CC', 'cc'))
+  default_variables['LINKER_SUPPORTS_ICF'] = \
+      gyp.system_test.TestLinkerSupportsICF(cc_command=cc_target)
 
 
 def tput(str):
