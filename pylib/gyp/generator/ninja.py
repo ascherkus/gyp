@@ -34,9 +34,9 @@ generator_default_variables = {
 }
 
 NINJA_BASE = """\
-builddir = ninja
+builddir = %(builddir_name)s
 # Short alias for builddir.
-b = ninja
+b = %(builddir_name)s
 
 cc = %(cc)s
 cxx = %(cxx)s
@@ -76,6 +76,7 @@ rule copy
   command = ln -f $in $out 2>/dev/null || cp -af $in $out
 
 """ % {
+  'builddir_name': os.environ.get('builddir_name', 'ninja'),
   'cwd': os.getcwd(),
   'cc': os.environ.get('CC', 'gcc'),
   'cxx': os.environ.get('CXX', 'g++'),
